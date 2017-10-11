@@ -66,6 +66,11 @@ void LEDMatrix::init()
 	setIntensity(0x0f);    // the first 0x0f is the value you can set
 }
 
+void LEDMatrix::test()
+{//light up all the LEDs
+	setCommand(max7219_reg_displayTest, 0x01);
+}
+
 void LEDMatrix::upload()
 {
 	/*PROCESSING example 
@@ -140,6 +145,13 @@ void LEDMatrix::clear()
 
 void LEDMatrix::setCommand(byte command, byte value)
 {
+	/* Command example
+	
+		      Byte n1		                    Byte n2
+	  D15 D14 D13 D12 D11 D10 D09 D08	D07 D06 D05 D04 D03 D02 D01 D00
+	B  x   x   x   x  register address       x   x   x   x  register data
+	
+	*/
 	digitalWrite(load, LOW);    
 	for (int i=0; i<nbMatX*nbMatY; i++) 
 	{
@@ -148,4 +160,10 @@ void LEDMatrix::setCommand(byte command, byte value)
 	}
 	digitalWrite(load, LOW);
 	digitalWrite(load, HIGH);
+}
+
+void LEDMatrix::setPoint(byte X, byte Y)
+{//light up the led at (x,y)
+  	bitWrite(LEDarr[(X/8)*8+Y%8][X/8],X%8,1);
+	upload();
 }
