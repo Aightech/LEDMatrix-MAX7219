@@ -40,8 +40,11 @@ class LEDMatrix
     LEDMatrix(byte data, byte load, byte clock, byte nbMatX,byte nbMatY);
     
     void init();
+    void test();
     void clear();
-    void LEDMatrix::setIntensity(byte intensity)
+    void setCommand(byte command, byte value)
+    void setIntensity(byte intensity);
+    void setPoint(byte X, byte Y);
 };
 
 #endif
