@@ -4,8 +4,8 @@
  * Author Aightech
  */
 
-#ifndef _LEDMatrix-MAX7219_H_
-#define _LEDMatrix-MAX7219_H_
+#ifndef _LEDMatrix_MAX7219_H_
+#define _LEDMatrix_MAX7219_H_
 
 #include "Arduino.h"
 
@@ -32,7 +32,7 @@ class LEDMatrix
     byte clock_pin;
     byte nbMatX;
     byte nbMatY;
-    byte **LEDarr;
+    int **LEDarr;
     
     void update();
 	
@@ -42,6 +42,7 @@ class LEDMatrix
     void init();
     void test();
     void clear();
+    void upload();
     void setCommand(byte command, byte value);
     void setIntensity(byte intensity);
     void setPoint(byte X, byte Y);
