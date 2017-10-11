@@ -42,7 +42,7 @@ class LEDMatrix
     void init();
     void test();
     void clear();
-    void setCommand(byte command, byte value)
+    void setCommand(byte command, byte value);
     void setIntensity(byte intensity);
     void setPoint(byte X, byte Y);
 };
