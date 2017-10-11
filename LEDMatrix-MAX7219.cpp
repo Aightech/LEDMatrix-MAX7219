@@ -136,11 +136,12 @@ void LEDMatrix::setIntensity(byte intensity)
 
 void LEDMatrix::clear()
 {
-	for(int i = 0; i < nbMatY;i++)
+	for(int i = 0; i < nbMatY*8;i++)
 	{
 		for(int j=0;j<nbMatX;j++)
 			LEDarr[i][j]=0;
 	}
+	upload();
 }
 
 void LEDMatrix::setCommand(byte command, byte value)
