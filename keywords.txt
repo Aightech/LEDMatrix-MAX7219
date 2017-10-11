@@ -5,3 +5,4 @@ setCommand	KEYWORD2
 setIntensity	KEYWORD2
 setPoint	KEYWORD2
 test	KEYWORD2
+upload KEYWORD2
