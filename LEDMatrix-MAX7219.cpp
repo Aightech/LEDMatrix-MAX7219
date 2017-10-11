@@ -168,3 +168,130 @@ void LEDMatrix::setPoint(byte X, byte Y)
   	bitWrite(LEDarr[(X/8)*8+Y%8][X/8],X%8,1);
 	upload();
 }
+void LEDMatrix::unsetPoint(byte X, byte Y)
+{//switch the led at (x,y)
+  	bitWrite(LEDarr[(Y/8)*8+Y%8][X/8],X%8,0);
+	upload();
+}
+
+void LEDMatrix::setLine(byte xa, byte ya,byte xb, byte yb)
+{//Draw a line
+       int dx= xb-xa;
+       int dirx=(dx>0)?1:-1;
+       dx=abs(dx);
+       int dy = yb-ya;
+       int diry=(dy>0)?1:-1;
+       dy=abs(dy);
+       if(dx==0)
+       {
+              for(int y=ya;y!=yb;y+=diry)
+                     bitWrite(LEDarr[(y/8)*8+y%8][xa/8],xa%8,1);
+              bitWrite(LEDarr[(yb/8)*8+yb%8][xa/8],xa%8,1);
+              
+       }
+       else
+       {
+              float a = (float)dy/dx;
+              float err=0;
+              /*Serial.print("dx = ");
+              Serial.print(dx);
+              Serial.print("   dy = ");
+              Serial.print(dy);
+              Serial.print("   a = ");
+              Serial.println(a);*/
+              if(dy<dx)
+              {
+                     int y =ya;
+                   for(int x=xa;x!=xb;x+=dirx)  
+                   {
+                     bitWrite(LEDarr[(y/8)*8+y%8][x/8],x%8,1);
+                     err+=a;
+                     Serial.println(err);
+                     if(err>0.5)
+                     {
+                            y+=diry;
+                            err-=1;
+                     }
+                   }
+                   bitWrite(LEDarr[(y/8)*8+y%8][xb/8],xb%8,1);
+              }
+              if(dy>=dx)
+              {
+                   int x =xa;
+                   for(int y=ya;y!=yb;y+=diry)  
+                   {
+                     bitWrite(LEDarr[(y/8)*8+y%8][x/8],x%8,1);
+                     err+=1/a;
+                     if(err>0.5)
+                     {
+                            x+=dirx;
+                            err-=1;
+                     }
+                   }
+                   bitWrite(LEDarr[(yb/8)*8+yb%8][x/8],x%8,1);
+              }
+       }
+       upload();
+       
+}
+
+void LEDMatrix::unsetLine(byte xa, byte ya,byte xb, byte yb)
+{
+       int dx= xb-xa;
+       int dirx=(dx>0)?1:-1;
+       dx=abs(dx);
+       int dy = yb-ya;
+       int diry=(dy>0)?1:-1;
+       dy=abs(dy);
+       if(dx==0)
+       {
+              for(int y=ya;y!=yb;y+=diry)
+                     bitWrite(LEDarr[(y/8)*8+y%8][xa/8],xa%8,0);
+              bitWrite(LEDarr[(yb/8)*8+yb%8][xa/8],xa%8,0);
+              
+       }
+       else
+       {
+              float a = (float)dy/dx;
+              float err=0;
+              /*Serial.print("dx = ");
+              Serial.print(dx);
+              Serial.print("   dy = ");
+              Serial.print(dy);
+              Serial.print("   a = ");
+              Serial.println(a);*/
+              if(dy<dx)
+              {
+                     int y =ya;
+                   for(int x=xa;x!=xb;x+=dirx)  
+                   {
+                     bitWrite(LEDarr[(y/8)*8+y%8][x/8],x%8,0);
+                     err+=a;
+                     Serial.println(err);
+                     if(err>0.5)
+                     {
+                            y+=diry;
+                            err-=1;
+                     }
+                   }
+                   bitWrite(LEDarr[(y/8)*8+y%8][xb/8],xb%8,0);
+              }
+              if(dy>=dx)
+              {
+                   int x =xa;
+                   for(int y=ya;y!=yb;y+=diry)  
+                   {
+                     bitWrite(LEDarr[(y/8)*8+y%8][x/8],x%8,0);
+                     err+=1/a;
+                     if(err>0.5)
+                     {
+                            x+=dirx;
+                            err-=1;
+                     }
+                   }
+                   bitWrite(LEDarr[(yb/8)*8+yb%8][x/8],x%8,0);
+              }
+       }
+       upload();
+       
+}
