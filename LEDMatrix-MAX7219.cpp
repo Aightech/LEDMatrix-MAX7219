@@ -14,8 +14,8 @@ LEDMatrix::LEDMatrix(byte _data, byte _load, byte _clock, byte _nbx, byte _nby)
 	clock_pin = _clock;
 	nbMatX = _nbx;
   	nbMatY = _nby;
-	LEDarr= new int*[nbMatY];
-	for(int i = 0; i < nbMatY; ++i)
+	LEDarr= new int*[nbMatY*8];
+	for(int i = 0; i < nbMatY*8; ++i)
 	{
     		LEDarr[i] = new int[nbMatX];
 		for(int j=0;j<nbMatX;j++)
