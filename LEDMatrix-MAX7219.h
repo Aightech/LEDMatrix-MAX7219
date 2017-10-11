@@ -41,6 +41,7 @@ class LEDMatrix
     
     void init();
     void clear();
+    void LEDMatrix::setIntensity(byte intensity)
 };
 
 #endif
