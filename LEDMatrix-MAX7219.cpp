@@ -66,6 +66,64 @@ void LEDMatrix::init()
 	setIntensity(0x0f);    // the first 0x0f is the value you can set
 }
 
+void LEDMatrix::upload()
+{
+	/*PROCESSING example 
+			7 B0000 0000 	 B0000 0000 	B0000 0000
+	i=0		6 B0000 0000 	 B0000 0000 	B0000 0000 
+	k=2		5 B0000 0000	 B0000 0000 	B0000 0000  
+			4 B0000 0000     B0000 0000     B0000 0000 
+			3 B0000 0000     B0000 0000     B0000 0000 
+			2 B0000 0000 	 B0000 0000 	B0000 0000 
+			1 B0000 0000 	 B0000 0000 	B0000 0000 
+	arr[0][2]==>    0 B0000 0000 	 B0000 0000 	B0000 0000
+              		       0	      1    	     2       X
+			       
+			7 B0000 0000 	 B0000 0000 	B0000 0000
+	i=0		6 B0000 0000 	 B0000 0000 	B0000 0000 
+	k=1		5 B0000 0000	 B0000 0000 	B0000 0000  
+			4 B0000 0000     B0000 0000     B0000 0000 
+			3 B0000 0000     B0000 0000     B0000 0000 
+			2 B0000 0000 	 B0000 0000 	B0000 0000 
+			1 B0000 0000 	 B0000 0000 	B0000 0000 
+	arr[0][1]==>    0 arr[0][2]==> 	 B0000 0000 	B0000 0000
+              		       0	      1    	     2       X
+			       
+			7 B0000 0000 	 B0000 0000 	B0000 0000
+	i=0		6 B0000 0000 	 B0000 0000 	B0000 0000 
+	k=0		5 B0000 0000	 B0000 0000 	B0000 0000  
+			4 B0000 0000     B0000 0000     B0000 0000 
+			3 B0000 0000     B0000 0000     B0000 0000 
+			2 B0000 0000 	 B0000 0000 	B0000 0000 
+			1 B0000 0000 	 B0000 0000 	B0000 0000 
+	arr[0][0]==>    0 arr[0][1]==> 	 arr[0][2]==> 	B0000 0000
+              		       0	      1    	     2       X
+			       
+			7 B0000 0000 	 B0000 0000 	B0000 0000
+	i=1		6 B0000 0000 	 B0000 0000 	B0000 0000 
+	k=2		5 B0000 0000	 B0000 0000 	B0000 0000  
+			4 B0000 0000     B0000 0000     B0000 0000 
+			3 B0000 0000     B0000 0000     B0000 0000 
+			2 B0000 0000 	 B0000 0000 	B0000 0000 
+	arr[1][2]==>	1 B0000 0000 	 B0000 0000 	B0000 0000 
+			0 arr[0][0] 	 arr[0][1] 	arr[0][2]
+              		       0	      1    	     2       X
+			       
+			      
+	*/
+	for (int j=0; j<8; j++) 
+    	{
+		digitalWrite(load_pin, LOW); 
+		for(int k=nbMatX*nbMatY; k>=0;k--)
+		{
+			shiftOut(data_pin, clock_pin, MSBFIRST, j+1);
+			shiftOut(data_pin, clock_pin, MSBFIRST, LEDarr[(k/nbMatX)*8+j][k%nbMatX]);
+		}
+		digitalWrite(load_pin, LOW);
+		digitalWrite(load_pin, HIGH);
+	}
+}
+
 void LEDMatrix::setIntensity(byte intensity)
 {
 	setCommand(max7219_reg_intensity, intensity);
