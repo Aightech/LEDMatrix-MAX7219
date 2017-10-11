@@ -7,7 +7,7 @@
 #include "Arduino.h"
 #include "LEDMatrix-MAX7219.h"
 
-LEDMatrix::LEDMatrix(byte _data, byte _load, byte _clock, byte _nbx, byte _nbx) 
+LEDMatrix::LEDMatrix(byte _data, byte _load, byte _clock, byte _nbx, byte _nby) 
 {
 	data_pin = _data;
 	load_pin = _load;
@@ -152,14 +152,14 @@ void LEDMatrix::setCommand(byte command, byte value)
 	B  x   x   x   x  register address       x   x   x   x  register data
 	
 	*/
-	digitalWrite(load, LOW);    
+	digitalWrite(load_pin, LOW);    
 	for (int i=0; i<nbMatX*nbMatY; i++) 
 	{
 		shiftOut(data_pin, clock_pin, MSBFIRST, command);
 		shiftOut(data_pin, clock_pin, MSBFIRST, value);
 	}
-	digitalWrite(load, LOW);
-	digitalWrite(load, HIGH);
+	digitalWrite(load_pin, LOW);
+	digitalWrite(load_pin, HIGH);
 }
 
 void LEDMatrix::setPoint(byte X, byte Y)
