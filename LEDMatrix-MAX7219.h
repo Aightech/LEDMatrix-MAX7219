@@ -46,6 +46,9 @@ class LEDMatrix
     void setCommand(byte command, byte value);
     void setIntensity(byte intensity);
     void setPoint(byte X, byte Y);
+    void unsetPoint(byte X, byte Y);
+    void setLine(byte xa, byte ya,byte xb, byte yb);
+    void unsetLine(byte xa, byte ya,byte xb, byte yb);
 };
 
 #endif
