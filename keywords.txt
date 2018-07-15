@@ -1,8 +1,8 @@
 LEDMatrix	KEYWORD1
-init		KEYWORD2
-clear		KEYWORD2
+init	KEYWORD2
+clear	KEYWORD2
 setCommand	KEYWORD2
 setIntensity	KEYWORD2
 setPoint	KEYWORD2
 test	KEYWORD2
-upload KEYWORD2
+upload	KEYWORD2
